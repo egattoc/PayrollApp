@@ -5,7 +5,6 @@ import com.example.payroll.payrolldemo.entities.dtos.EmployeeDto;
 import com.example.payroll.payrolldemo.requests.UpdateEmployeeInput;
 import com.example.payroll.payrolldemo.services.EmployeeService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -28,7 +27,7 @@ public class EmployeeControllerTest {
     private static final Employee employee = new Employee(1,"Adam", "SWE", 200, "SFO", "Sales", "Anushka");
     private static final EmployeeDto employeeDto = new EmployeeDto("Adam", "SWE", 200, "SFO", "Sales", "Anushka");
 
-    private static final UpdateEmployeeInput updateEmployeeInput = new UpdateEmployeeInput("Adam", "SWE", 200, "SFO", "Sales", "Anushka");
+    private static final UpdateEmployeeInput updateEmployeeInput = new UpdateEmployeeInput("Adam", "SWE", 200, "SFO", "Sales", "Anu");
     private static final Employee employee2 = new Employee(1,"Adam", "SWE", 200, "SFO", "Sales", "Anu");
     @BeforeEach
     public void setup() {
@@ -68,8 +67,6 @@ public class EmployeeControllerTest {
     @Test
     public void testCreate_ExpectSuccess(){
         Mockito.when(employeeService.create(Mockito.any(Employee.class))).thenReturn(employee);
-//        final ResponseEntity<Employee> expectedEmployee =
-//                new ResponseEntity<>(employee,HttpStatus.CREATED);
         final ResponseEntity<Employee> actualOutput = employeeController.createEmployee(employeeDto);
         Assertions.assertEquals(HttpStatus.CREATED,actualOutput.getStatusCode());
         final Employee actualEmployee = actualOutput.getBody();
@@ -91,15 +88,15 @@ public class EmployeeControllerTest {
         Assertions.assertEquals(expectedEmployee, actualEmployee);
     }
 
-//    @Test
-//    public void testUpdate_ExpectSuccess() {
-//        final Optional<Employee> optionalEmployee = Optional.of(employee);
-//        Mockito.when(employeeService.findById(2)).thenReturn(optionalEmployee);
-//        Mockito.when(employeeService.update(employee)).thenReturn(employee2);
-//        final ResponseEntity<Employee> expectedEmployee =
-//                new ResponseEntity<>(employee, HttpStatus.OK);
-//        final ResponseEntity<Employee> actualEmployee = employeeController.updateEmployee(2, new UpdateEmployeeInput("Adam", "SWE", 200, "SFO", "Sales", "Anu"));
-//        Assertions.assertEquals(expectedEmployee, actualEmployee);
-//    }
+   @Test
+   public void testUpdate_ExpectSuccess() {
+       final Optional<Employee> optionalEmployee = Optional.of(employee);
+       Mockito.when(employeeService.findById(2)).thenReturn(optionalEmployee);
+       Mockito.when(employeeService.update(employee)).thenReturn(employee2);
+       final ResponseEntity<Employee> expectedEmployee =
+               new ResponseEntity<>(employee2, HttpStatus.OK);
+       final ResponseEntity<Employee> actualEmployee = employeeController.updateEmployee(2, updateEmployeeInput);
+       Assertions.assertEquals(expectedEmployee, actualEmployee);
+   }
 
 }
