@@ -8,4 +8,4 @@ The following REST API endpoints have been added:
 - Update an employee
 - Delete an employee
 
-Unit tests and the Dockerfile have also been added.
+Unit tests, Dockerfile and build script have also been added.
